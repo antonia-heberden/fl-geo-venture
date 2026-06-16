@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FL Geo Venture Map</title>
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css"
+  />
+
+  <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+    }
+
+    #map {
+      width: 100vw;
+      height: 100vh;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+
+  <script>
+const map = new maplibregl.Map({
+  container: "map",
+  style: "https://tiles.openfreemap.org/styles/bright",
+  center: [-0.1276, 51.5072],
+  zoom: 4
+});
+
+map.on("load", () => {
+  map.addSource("powerplants", {
+    type: "geojson",
+    data: "../../data/processed/powerplants.geojson"
+  });
+
+  map.addLayer({
+    id: "powerplants-layer",
+    type: "circle",
+    source: "powerplants",
+    paint: {
+      "circle-radius": 3,
+      "circle-opacity": 0.7
+    }
+  });
+});
+</script>
+</body>
+</html>
